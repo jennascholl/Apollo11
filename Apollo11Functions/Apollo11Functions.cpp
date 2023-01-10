@@ -12,12 +12,14 @@
  **************************************************************/
 
 #include <iostream>  // for CIN and COUT
-#include <math.h>    // for sin and cos
 using namespace std;
 
 #define WEIGHT   15103.000   // Weight in KG
 #define GRAVITY     -1.625   // Vertical acceleration due to gravity, in m/s^2
 #define THRUST   45000.000   // Thrust of main engine, in Newtons (kg m/s^2)
+
+#define _USE_MATH_DEFINES    // for M_PI
+#include <math.h>            // for sin and cos
 
 /***************************************************
  * COMPUTE DISTANCE
@@ -34,8 +36,7 @@ using namespace std;
  **************************************************/
 double computeDistance(double s, double v, double a, double t)
 {
-    double newS = s + v * t + (a / 2) * (t * t);
-    return newS;
+   return s + v * t + (a / 2) * (t * t);
 }
 
 /**************************************************
@@ -116,8 +117,8 @@ double computeVerticalComponent(double a, double total)
  ***********************************************/
 double computeHorizontalComponent(double a, double total)
 {
-    double x = sin(a) * total;
-    return x;
+   double x = sin(a) * total;
+   return x;
 }
 
 /************************************************
@@ -141,8 +142,7 @@ double computeHorizontalComponent(double a, double total)
  ***********************************************/
 double computeTotalComponent(double x, double y)
 {
-   double squareTotal = (x * x) + (y * y);
-   return squareTotal / squareTotal;
+   return ((x * x) + (y * y)) / ((x * x) + (y * y));
 }
 
 
@@ -157,7 +157,7 @@ double computeTotalComponent(double x, double y)
  **************************************************/
 double radiansFromDegrees(double d)
 {
-    double radians = ( d / 360 ) * 2 * M_PI 
+   return (d / 360) * 2 * M_PI;
 }
 
 /**************************************************

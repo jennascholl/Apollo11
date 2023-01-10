@@ -12,6 +12,7 @@
  **************************************************************/
 
 #include <iostream>  // for CIN and COUT
+#include <math.h>    // for sin and cos
 using namespace std;
 
 #define WEIGHT   15103.000   // Weight in KG
@@ -68,7 +69,6 @@ double computeVelocity(double v, double a, double t)
    return v + (a * t);
 }
 
-
 /***********************************************
  * COMPUTE VERTICAL COMPONENT
  * Find the vertical component of a velocity or acceleration.
@@ -87,7 +87,10 @@ double computeVelocity(double v, double a, double t)
  * OUTPUT
  *     y : the vertical component of the total
  ***********************************************/
-    // your function goes here
+double computeVerticalComponent(double a, double total)
+{
+   return cos(a) * total;
+}
 
 /***********************************************
  * COMPUTE HORIZONTAL COMPONENT

@@ -144,7 +144,13 @@ using namespace std;
  * OUTPUT
  *      response : the user's response
  ***************************************************/
-// your function goes here
+double prompt(string message)
+{
+   double value = 0.0;
+   cout << message;
+   cin >> value;
+   return value;
+}
 
 /****************************************************************
 * MAIN
@@ -175,7 +181,7 @@ int main()
    cout.precision(2);
    cout << "\tNew position:   (" << x << ", " << y << ")m\n";
    cout << "\tNew velocity:   (" << dx << ", " << dy << ")m/s\n";
-   cout << "\tTotal velocity:  " << v << "m/s\n\n";
+//   cout << "\tTotal velocity:  " << v << "m/s\n\n";
 
 
    return 0;

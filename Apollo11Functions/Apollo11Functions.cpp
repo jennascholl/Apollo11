@@ -117,8 +117,7 @@ double computeVerticalComponent(double a, double total)
  ***********************************************/
 double computeHorizontalComponent(double a, double total)
 {
-   double x = sin(a) * total;
-   return x;
+   return sin(a) * total;
 }
 
 /************************************************
@@ -189,10 +188,10 @@ int main()
    double x = prompt("What is your position (m)? ");
    double aDegrees = prompt("What is the angle of the LM where 0 is up (degrees)? ");
    double t = prompt("What is the time interval (s)? ");
-   double aRadians;            // Angle in radians
-   // double accelerationThrust = computeAcceleration();  // Acceleration due to thrust 
-   double ddxThrust;           // Horizontal acceleration due to thrust
-   double ddyThrust;           // Vertical acceleration due to thrust
+   double aRadians = radiansFromDegrees(aDegrees);                                 // Angle in radians
+   double accelerationThrust = computeAcceleration(THRUST, WEIGHT);                // Acceleration due to thrust 
+   double ddxThrust = computeHorizontalComponent(aRadians, accelerationThrust);    // Horizontal acceleration due to thrust
+   double ddyThrust = computeVerticalComponent(aRadians, accelerationThrust);      // Vertical acceleration due to thrust
    double ddx;                 // Total horizontal acceleration
    double ddy;                 // Total vertical acceleration
    double v;                   // Total velocity

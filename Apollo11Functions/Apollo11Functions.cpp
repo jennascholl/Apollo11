@@ -44,7 +44,10 @@ using namespace std;
  * OUTPUT
  *     a : acceleration, in meters/second^2
  ***************************************************/
-  // your function goes here
+double computeAcceleration(double f, double m)
+{
+   return f / m;
+}
 
 /***********************************************
  * COMPUTE VELOCITY
@@ -60,7 +63,10 @@ using namespace std;
  * OUTPUT
  *     v : new velocity, in meters/second
  ***********************************************/
- // your function goes here
+double computeVelocity(double v, double a, double t)
+{
+   return v + (a * t);
+}
 
 
 /***********************************************

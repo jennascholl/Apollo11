@@ -139,7 +139,11 @@ double computeHorizontalComponent(double a, double total)
  * OUTPUT
  *    total : total component
  ***********************************************/
- // your function goes here
+double computeTotalComponent(double x, double y)
+{
+   double squareTotal = (x * x) + (y * y);
+   return squareTotal / squareTotal;
+}
 
 
 /*************************************************
@@ -186,7 +190,7 @@ int main()
    double aDegrees = prompt("What is the angle of the LM where 0 is up (degrees)? ");
    double t = prompt("What is the time interval (s)? ");
    double aRadians;            // Angle in radians
-   double accelerationThrust;  // Acceleration due to thrust 
+   // double accelerationThrust = computeAcceleration();  // Acceleration due to thrust 
    double ddxThrust;           // Horizontal acceleration due to thrust
    double ddyThrust;           // Vertical acceleration due to thrust
    double ddx;                 // Total horizontal acceleration
@@ -196,7 +200,7 @@ int main()
    // Go through the simulator five times
      // your code goes here
 
-     // Output
+   // Output
    cout.setf(ios::fixed | ios::showpoint);
    cout.precision(2);
    cout << "\tNew position:   (" << x << ", " << y << ")m\n";

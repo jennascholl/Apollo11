@@ -32,7 +32,11 @@ using namespace std;
  * OUTPUT
  *     s : new position, in meters
  **************************************************/
- // your function goes here
+double computeDistance(double s, double v, double a, double t)
+{
+    double newS = s + v * t + (a / 2) * (t * t);
+    return newS;
+}
 
 /**************************************************
  * COMPUTE ACCELERATION
@@ -110,7 +114,11 @@ double computeVerticalComponent(double a, double total)
  * OUTPUT
  *     x : the vertical component of the total
  ***********************************************/
-     // your function goes here
+double computeHorizontalComponent(double a, double total)
+{
+    double x = sin(a) * total;
+    return x;
+}
 
 /************************************************
  * COMPUTE TOTAL COMPONENT
@@ -143,7 +151,10 @@ double computeVerticalComponent(double a, double total)
  * OUTPUT
  *     r : radians from 0 to 2pi
  **************************************************/
-// your function goes here
+double radiansFromDegrees(double d)
+{
+    double radians = ( d / 360 ) * 2 * M_PI 
+}
 
 /**************************************************
  * PROMPT

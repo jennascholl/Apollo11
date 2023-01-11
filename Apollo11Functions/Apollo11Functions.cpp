@@ -6,12 +6,15 @@
  * 3. Assignment Description:
  *      Compute how the Apollo lander will move across the screen
  * 4. What was the hardest part? Be as specific as possible.
- *      -a paragraph or two about how the assignment went for you-
+ *      The hardest part of this assignment was determining which functions
+ *      to use for what, and what values to put in those functions. I had
+ *      trouble with calculating the total velocity because I was trying to 
+ *      find it by using computeVelocity() instead of computeTotalComponent().
  * 5. How long did it take for you to complete the assignment?
- *      -total time in hours: reading the assignment, submitting, etc.
+ *      It took 3 hours to complete this assignment
  **************************************************************/
 
-#include <iostream>  // for CIN and COUT
+#include <iostream>          // for CIN and COUT
 using namespace std;
 
 #define WEIGHT   15103.000   // Weight in KG
@@ -36,7 +39,7 @@ using namespace std;
  **************************************************/
 double computeDistance(double s, double v, double a, double t)
 {
-   return s + v * t + (a / 2) * (t * t);
+   return s + v * t + 0.5 * a * (t * t);
 }
 
 /**************************************************
@@ -141,7 +144,7 @@ double computeHorizontalComponent(double a, double total)
  ***********************************************/
 double computeTotalComponent(double x, double y)
 {
-   return ((x * x) + (y * y)) / ((x * x) + (y * y));
+   return sqrt((x * x) + (y * y));
 }
 
 
@@ -192,20 +195,27 @@ int main()
    double accelerationThrust = computeAcceleration(THRUST, WEIGHT);                // Acceleration due to thrust 
    double ddxThrust = computeHorizontalComponent(aRadians, accelerationThrust);    // Horizontal acceleration due to thrust
    double ddyThrust = computeVerticalComponent(aRadians, accelerationThrust);      // Vertical acceleration due to thrust
-   double ddx;                 // Total horizontal acceleration
-   double ddy;                 // Total vertical acceleration
-   double v;                   // Total velocity
+   double ddx = ddxThrust;                                                         // Total horizontal acceleration
+   double ddy = ddyThrust + GRAVITY;                                               // Total vertical acceleration
+   double v = computeTotalComponent(dx, dy);                                       // Total velocity
+   double a = computeTotalComponent(ddx, ddy);                                     // Total acceleration
 
    // Go through the simulator five times
-     // your code goes here
+   for (int i = 0; i < 5; i++)
+   {
+      dy = computeVelocity(dy, ddy, t);                  // Compute new vertical velocity
+      dx = computeVelocity(dx, ddx, t);                  // Compute new horizontal velocity
+      v = computeTotalComponent(dx, dy);                 // Compute new total velocity
+      y = computeDistance(y, dy, ddy, t);                // Compute new altitude
+      x = computeDistance(x, dx, ddx, t);                // Compute new position
 
-   // Output
-   cout.setf(ios::fixed | ios::showpoint);
-   cout.precision(2);
-   cout << "\tNew position:   (" << x << ", " << y << ")m\n";
-   cout << "\tNew velocity:   (" << dx << ", " << dy << ")m/s\n";
-//   cout << "\tTotal velocity:  " << v << "m/s\n\n";
-
+      // Output
+      cout.setf(ios::fixed | ios::showpoint);
+      cout.precision(2);
+      cout << "\tNew position:   (" << x << ", " << y << ")m\n";
+      cout << "\tNew velocity:   (" << dx << ", " << dy << ")m/s\n";
+      cout << "\tTotal velocity:  " << v << "m/s\n\n";
+   }
 
    return 0;
 }

@@ -210,6 +210,8 @@ void simulate(double x, double y, double dx, double dy, double ddx, double ddy, 
 
       currentTime += t;
    }
+
+
 }
 
 /****************************************************************
@@ -234,7 +236,53 @@ int main()
    double v = computeTotalComponent(dx, dy);                                       // Total velocity
    double a = computeTotalComponent(ddx, ddy);                                     // Total acceleration
 
-   simulate(x, y, dx, dy, ddx, ddy, v, aDegrees, t);
+   double currentTime = t;
+
+   // Go through the simulator five times
+   for (int i = 0; i < 5; i++)
+   {
+      dy = computeVelocity(dy, ddy, t);                  // Compute new vertical velocity
+      dx = computeVelocity(dx, ddx, t);                  // Compute new horizontal velocity
+      v = computeTotalComponent(dx, dy);                 // Compute new total velocity
+      y = computeDistance(y, dy, ddy, t);                // Compute new altitude
+      x = computeDistance(x, dx, ddx, t);                // Compute new position
+
+      // Output
+      cout.setf(ios::fixed | ios::showpoint);
+      cout.precision(2);
+
+      cout << "\t" << currentTime << "s - x, y: ("
+         << x << ", " << y << ")m  dx, dy: ("
+         << dx << ", " << dy << "m / s  speed: "
+         << v << "m / s  angle: "
+         << aDegrees << "deg" << endl;
+
+      currentTime += t;
+   }
+
+   aDegrees = prompt("What is the new angle of the LM where 0 is up (degrees)? ");
+
+   // Go through the simulator five more times
+   for (int i = 0; i < 5; i++)
+   {
+      dy = computeVelocity(dy, ddy, t);                  // Compute new vertical velocity
+      dx = computeVelocity(dx, ddx, t);                  // Compute new horizontal velocity
+      v = computeTotalComponent(dx, dy);                 // Compute new total velocity
+      y = computeDistance(y, dy, ddy, t);                // Compute new altitude
+      x = computeDistance(x, dx, ddx, t);                // Compute new position
+
+      // Output
+      cout.setf(ios::fixed | ios::showpoint);
+      cout.precision(2);
+
+      cout << "\t" << currentTime << "s - x, y: ("
+         << x << ", " << y << ")m  dx, dy: ("
+         << dx << ", " << dy << "m / s  speed: "
+         << v << "m / s  angle: "
+         << aDegrees << "deg" << endl;
+
+      currentTime += t;
+   }
 
    return 0;
 }

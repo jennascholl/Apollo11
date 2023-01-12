@@ -2,17 +2,16 @@
  * 1. Name:
  *      Jenna Scholl and Neil Reed
  * 2. Assignment Name:
- *      Practice 02: Physics simulator
+ *      Lab 02: Apollo 11
  * 3. Assignment Description:
- *      Compute how the Apollo lander will move across the screen
+ *      Simulate the Apollo 11 landing
  * 4. What was the hardest part? Be as specific as possible.
- *      The hardest part of this assignment was determining which functions
- *      to use for what, and what values to put in those functions. I had
- *      trouble with calculating the total velocity because I was trying to 
- *      find it by using computeVelocity() instead of computeTotalComponent().
+ *      Trying to avoid creating redundant code. We weren't sure
+ *      how to reuse code in a way that still updated all the 
+ *      variables appropriately.
  * 5. How long did it take for you to complete the assignment?
- *      It took 3 hours to complete this assignment
- **************************************************************/
+ *      45 minutes
+ *****************************************************************/
 
 #include <iostream>          // for CIN and COUT
 using namespace std;
@@ -178,42 +177,6 @@ double prompt(string message)
    return value;
 }
 
-/**************************************************
- * SIMULATE
- * INPUT DESCRIPTION HERE!!!!!
- * INPUT
- *      message : the message to display to the user
- * OUTPUT
- *      response : the user's response
- ***************************************************/
-void simulate(double x, double y, double dx, double dy, double ddx, double ddy, double v, double aDegrees, double t)
-{
-   double currentTime = t;
-   // Go through the simulator five times
-   for (int i = 0; i < 5; i++)
-   {
-      dy = computeVelocity(dy, ddy, t);                  // Compute new vertical velocity
-      dx = computeVelocity(dx, ddx, t);                  // Compute new horizontal velocity
-      v = computeTotalComponent(dx, dy);                 // Compute new total velocity
-      y = computeDistance(y, dy, ddy, t);                // Compute new altitude
-      x = computeDistance(x, dx, ddx, t);                // Compute new position
-
-      // Output
-      cout.setf(ios::fixed | ios::showpoint);
-      cout.precision(2);
-
-      cout << "\t" << currentTime << "s - x, y: (" 
-           << x << ", " << y << ")m  dx, dy: (" 
-           << dx << ", " << dy << "m / s  speed: " 
-           << v << "m / s  angle: " 
-           << aDegrees << "deg" << endl;
-
-      currentTime += t;
-   }
-
-
-}
-
 /****************************************************************
 * MAIN
 * Prompt for input, compute new position, and display output
@@ -261,6 +224,12 @@ int main()
    }
 
    aDegrees = prompt("What is the new angle of the LM where 0 is up (degrees)? ");
+   aRadians = radiansFromDegrees(aDegrees);                                    // Angle in radians
+   ddxThrust = computeHorizontalComponent(aRadians, accelerationThrust);    // Horizontal acceleration due to thrust
+   ddyThrust = computeVerticalComponent(aRadians, accelerationThrust);      // Vertical acceleration due to thrust
+   ddx = ddxThrust;                                                         // Total horizontal acceleration
+   ddy = ddyThrust + GRAVITY;                                               // Total vertical acceleration
+   v = computeTotalComponent(dx, dy);                                       // Total velocity
 
    // Go through the simulator five more times
    for (int i = 0; i < 5; i++)

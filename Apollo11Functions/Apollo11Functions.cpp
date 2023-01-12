@@ -178,28 +178,17 @@ double prompt(string message)
    return value;
 }
 
-/****************************************************************
-* MAIN
-* Prompt for input, compute new position, and display output
-****************************************************************/
-int main()
+/**************************************************
+ * SIMULATE
+ * INPUT DESCRIPTION HERE!!!!!
+ * INPUT
+ *      message : the message to display to the user
+ * OUTPUT
+ *      response : the user's response
+ ***************************************************/
+void simulate(double x, double y, double dx, double dy, double ddx, double ddy, double v, double aDegrees, double t)
 {
-   // Prompt for input and variables to be computed
-   double dx = prompt("What is your horizontal velocity (m/s)? ");
-   double dy = prompt("What is your vertical velocity (m/s)? ");
-   double y = prompt("What is your altitude (m)? ");
-   double x = prompt("What is your position (m)? ");
-   double aDegrees = prompt("What is the angle of the LM where 0 is up (degrees)? ");
-   double t = prompt("What is the time interval (s)? ");
-   double aRadians = radiansFromDegrees(aDegrees);                                 // Angle in radians
-   double accelerationThrust = computeAcceleration(THRUST, WEIGHT);                // Acceleration due to thrust 
-   double ddxThrust = computeHorizontalComponent(aRadians, accelerationThrust);    // Horizontal acceleration due to thrust
-   double ddyThrust = computeVerticalComponent(aRadians, accelerationThrust);      // Vertical acceleration due to thrust
-   double ddx = ddxThrust;                                                         // Total horizontal acceleration
-   double ddy = ddyThrust + GRAVITY;                                               // Total vertical acceleration
-   double v = computeTotalComponent(dx, dy);                                       // Total velocity
-   double a = computeTotalComponent(ddx, ddy);                                     // Total acceleration
-
+   double currentTime = t;
    // Go through the simulator five times
    for (int i = 0; i < 5; i++)
    {
@@ -212,10 +201,40 @@ int main()
       // Output
       cout.setf(ios::fixed | ios::showpoint);
       cout.precision(2);
-      cout << "\tNew position:   (" << x << ", " << y << ")m\n";
-      cout << "\tNew velocity:   (" << dx << ", " << dy << ")m/s\n";
-      cout << "\tTotal velocity:  " << v << "m/s\n\n";
+
+      cout << "\t" << currentTime << "s - x, y: (" 
+           << x << ", " << y << ")m  dx, dy: (" 
+           << dx << ", " << dy << "m / s  speed: " 
+           << v << "m / s  angle: " 
+           << aDegrees << "deg" << endl;
+
+      currentTime += t;
    }
+}
+
+/****************************************************************
+* MAIN
+* Prompt for input, compute new position, and display output
+****************************************************************/
+int main()
+{
+   // Prompt for input and variables to be computed
+   double dx = prompt("What is your horizontal velocity (m/s)? ");
+   double dy = prompt("What is your vertical velocity (m/s)? ");
+   double y = prompt("What is your altitude (m)? ");
+   double x = 0.0;
+   double aDegrees = prompt("What is the angle of the LM where 0 is up (degrees)? ");
+   double t = 1.0;
+   double aRadians = radiansFromDegrees(aDegrees);                                 // Angle in radians
+   double accelerationThrust = computeAcceleration(THRUST, WEIGHT);                // Acceleration due to thrust 
+   double ddxThrust = computeHorizontalComponent(aRadians, accelerationThrust);    // Horizontal acceleration due to thrust
+   double ddyThrust = computeVerticalComponent(aRadians, accelerationThrust);      // Vertical acceleration due to thrust
+   double ddx = ddxThrust;                                                         // Total horizontal acceleration
+   double ddy = ddyThrust + GRAVITY;                                               // Total vertical acceleration
+   double v = computeTotalComponent(dx, dy);                                       // Total velocity
+   double a = computeTotalComponent(ddx, ddy);                                     // Total acceleration
+
+   simulate(x, y, dx, dy, ddx, ddy, v, aDegrees, t);
 
    return 0;
 }

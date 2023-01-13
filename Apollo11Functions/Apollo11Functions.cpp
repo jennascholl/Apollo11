@@ -9,7 +9,7 @@
  *      Trying to avoid creating redundant code. We ended up
  *      passing everything to simulate() by reference.
  * 5. How long did it take for you to complete the assignment?
- *      45 minutes
+ *      1 hour
  *****************************************************************/
 
 #include <iostream>          // for CIN and COUT
@@ -157,7 +157,7 @@ double computeTotalComponent(double x, double y)
  **************************************************/
 double radiansFromDegrees(double d)
 {
-   return (d / 360) * 2 * M_PI;
+   return (d / 360.0) * 2.0 * M_PI;
 }
 
 /**************************************************
@@ -192,25 +192,38 @@ double prompt(string message)
  *      t : the unit of time
  *      currentT: total time passed
  ***************************************************/
-void simulate(double &x, double &y, double &dx, double &dy, double &ddx, double &ddy, double &v, double &aDegrees, double &t, double &currentT)
+void simulate(double &x, double &y, double &dx, double &dy, double &ddx, double &ddy, double &v, double &aDegrees, double t, double currentT)
 {
    dy = computeVelocity(dy, ddy, t);                  // Compute new vertical velocity
    dx = computeVelocity(dx, ddx, t);                  // Compute new horizontal velocity
    v = computeTotalComponent(dx, dy);                 // Compute new total velocity
    y = computeDistance(y, dy, ddy, t);                // Compute new altitude
    x = computeDistance(x, dx, ddx, t);                // Compute new position
+}
 
-   // Output
+/**************************************************
+ * DISPLAY
+ * A function to display the current physics values
+ * INPUT
+ *      x : position
+ *      y : altitude
+ *      dx : horizontal velocity
+ *      dy : vertical velocity
+ *      v : total velocity
+ *      aDegrees : angle in degrees
+ *      t : the unit of time
+ *      currentT: total time passed
+ ***************************************************/
+void display(double x, double y, double dx, double dy, double v, double aDegrees, double currentT)
+{
    cout.setf(ios::fixed | ios::showpoint);
    cout.precision(2);
 
    cout << "\t" << currentT << "s - x, y: ("
-        << x << ", " << y << ")m  dx, dy: ("
-        << dx << ", " << dy << "m / s  speed: "
-        << v << "m / s  angle: "
-        << aDegrees << "deg" << endl;
-
-   currentT += t;
+      << x << ", " << y << ")m  dx, dy: ("
+      << dx << ", " << dy << "m / s  speed: "
+      << v << "m / s  angle: "
+      << aDegrees << "deg" << endl;
 }
 
 /****************************************************************
@@ -238,7 +251,11 @@ int main()
 
    // Run the simulator 5 times
    for (int i = 0; i < 5; i++)
+   {
       simulate(x, y, dx, dy, ddx, ddy, v, aDegrees, t, currentT);
+      display(x, y, dx, dy, v, aDegrees, currentT);
+      currentT++;
+   }
 
    // Prompt for new angle and modify the necessary variables
    aDegrees = prompt("What is the new angle of the LM where 0 is up (degrees)? ");
@@ -251,7 +268,11 @@ int main()
 
    // Run the simulator 5 more times
    for (int i = 0; i < 5; i++)
+   {
       simulate(x, y, dx, dy, ddx, ddy, v, aDegrees, t, currentT);
+      display(x, y, dx, dy, v, aDegrees, currentT);
+      currentT++;
+   }
 
    return 0;
 }

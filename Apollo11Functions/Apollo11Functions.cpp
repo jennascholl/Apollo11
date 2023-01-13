@@ -6,9 +6,8 @@
  * 3. Assignment Description:
  *      Simulate the Apollo 11 landing
  * 4. What was the hardest part? Be as specific as possible.
- *      Trying to avoid creating redundant code. We weren't sure
- *      how to reuse code in a way that still updated all the 
- *      variables appropriately.
+ *      Trying to avoid creating redundant code. We ended up
+ *      passing everything to simulate() by reference.
  * 5. How long did it take for you to complete the assignment?
  *      45 minutes
  *****************************************************************/
@@ -177,6 +176,43 @@ double prompt(string message)
    return value;
 }
 
+/**************************************************
+ * SIMULATE
+ * A function to simulate movement of the Apollo 11
+ * by modifying each value by 1 unit of time
+ * INPUT
+ *      x : position
+ *      y : altitude
+ *      dx : horizontal velocity
+ *      dy : vertical velocity
+ *      ddx : horizontal acceleration
+ *      ddy : vertical acceleration
+ *      v : total velocity
+ *      aDegrees : angle in degrees
+ *      t : the unit of time
+ *      currentT: total time passed
+ ***************************************************/
+void simulate(double &x, double &y, double &dx, double &dy, double &ddx, double &ddy, double &v, double &aDegrees, double &t, double &currentT)
+{
+   dy = computeVelocity(dy, ddy, t);                  // Compute new vertical velocity
+   dx = computeVelocity(dx, ddx, t);                  // Compute new horizontal velocity
+   v = computeTotalComponent(dx, dy);                 // Compute new total velocity
+   y = computeDistance(y, dy, ddy, t);                // Compute new altitude
+   x = computeDistance(x, dx, ddx, t);                // Compute new position
+
+   // Output
+   cout.setf(ios::fixed | ios::showpoint);
+   cout.precision(2);
+
+   cout << "\t" << currentT << "s - x, y: ("
+        << x << ", " << y << ")m  dx, dy: ("
+        << dx << ", " << dy << "m / s  speed: "
+        << v << "m / s  angle: "
+        << aDegrees << "deg" << endl;
+
+   currentT += t;
+}
+
 /****************************************************************
 * MAIN
 * Prompt for input, compute new position, and display output
@@ -189,7 +225,8 @@ int main()
    double y = prompt("What is your altitude (m)? ");
    double x = 0.0;
    double aDegrees = prompt("What is the angle of the LM where 0 is up (degrees)? ");
-   double t = 1.0;
+   double t = 1.0;                                                                 // Time interval between updates
+   double currentT = t;                                                            // Total time passed
    double aRadians = radiansFromDegrees(aDegrees);                                 // Angle in radians
    double accelerationThrust = computeAcceleration(THRUST, WEIGHT);                // Acceleration due to thrust 
    double ddxThrust = computeHorizontalComponent(aRadians, accelerationThrust);    // Horizontal acceleration due to thrust
@@ -199,59 +236,22 @@ int main()
    double v = computeTotalComponent(dx, dy);                                       // Total velocity
    double a = computeTotalComponent(ddx, ddy);                                     // Total acceleration
 
-   double currentTime = t;
-
-   // Go through the simulator five times
+   // Run the simulator 5 times
    for (int i = 0; i < 5; i++)
-   {
-      dy = computeVelocity(dy, ddy, t);                  // Compute new vertical velocity
-      dx = computeVelocity(dx, ddx, t);                  // Compute new horizontal velocity
-      v = computeTotalComponent(dx, dy);                 // Compute new total velocity
-      y = computeDistance(y, dy, ddy, t);                // Compute new altitude
-      x = computeDistance(x, dx, ddx, t);                // Compute new position
+      simulate(x, y, dx, dy, ddx, ddy, v, aDegrees, t, currentT);
 
-      // Output
-      cout.setf(ios::fixed | ios::showpoint);
-      cout.precision(2);
-
-      cout << "\t" << currentTime << "s - x, y: ("
-         << x << ", " << y << ")m  dx, dy: ("
-         << dx << ", " << dy << "m / s  speed: "
-         << v << "m / s  angle: "
-         << aDegrees << "deg" << endl;
-
-      currentTime += t;
-   }
-
+   // Prompt for new angle and modify the necessary variables
    aDegrees = prompt("What is the new angle of the LM where 0 is up (degrees)? ");
-   aRadians = radiansFromDegrees(aDegrees);                                    // Angle in radians
-   ddxThrust = computeHorizontalComponent(aRadians, accelerationThrust);    // Horizontal acceleration due to thrust
-   ddyThrust = computeVerticalComponent(aRadians, accelerationThrust);      // Vertical acceleration due to thrust
-   ddx = ddxThrust;                                                         // Total horizontal acceleration
-   ddy = ddyThrust + GRAVITY;                                               // Total vertical acceleration
-   v = computeTotalComponent(dx, dy);                                       // Total velocity
+   aRadians = radiansFromDegrees(aDegrees);                                        // Update angle in radians
+   ddxThrust = computeHorizontalComponent(aRadians, accelerationThrust);           // Update horizontal acceleration due to thrust
+   ddyThrust = computeVerticalComponent(aRadians, accelerationThrust);             // Update vertical acceleration due to thrust
+   ddx = ddxThrust;                                                                // Update total horizontal acceleration
+   ddy = ddyThrust + GRAVITY;                                                      // Update total vertical acceleration
+   v = computeTotalComponent(dx, dy);                                              // Update total velocity
 
-   // Go through the simulator five more times
+   // Run the simulator 5 more times
    for (int i = 0; i < 5; i++)
-   {
-      dy = computeVelocity(dy, ddy, t);                  // Compute new vertical velocity
-      dx = computeVelocity(dx, ddx, t);                  // Compute new horizontal velocity
-      v = computeTotalComponent(dx, dy);                 // Compute new total velocity
-      y = computeDistance(y, dy, ddy, t);                // Compute new altitude
-      x = computeDistance(x, dx, ddx, t);                // Compute new position
-
-      // Output
-      cout.setf(ios::fixed | ios::showpoint);
-      cout.precision(2);
-
-      cout << "\t" << currentTime << "s - x, y: ("
-         << x << ", " << y << ")m  dx, dy: ("
-         << dx << ", " << dy << "m / s  speed: "
-         << v << "m / s  angle: "
-         << aDegrees << "deg" << endl;
-
-      currentTime += t;
-   }
+      simulate(x, y, dx, dy, ddx, ddy, v, aDegrees, t, currentT);
 
    return 0;
 }

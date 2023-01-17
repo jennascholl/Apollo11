@@ -230,49 +230,49 @@ void display(double x, double y, double dx, double dy, double v, double aDegrees
 * MAIN
 * Prompt for input, compute new position, and display output
 ****************************************************************/
-int main()
-{
-   // Prompt for input and variables to be computed
-   double dx = prompt("What is your horizontal velocity (m/s)? ");
-   double dy = prompt("What is your vertical velocity (m/s)? ");
-   double y = prompt("What is your altitude (m)? ");
-   double x = 0.0;
-   double aDegrees = prompt("What is the angle of the LM where 0 is up (degrees)? ");
-   double t = 1.0;                                                                 // Time interval between updates
-   double currentT = t;                                                            // Total time passed
-   double aRadians = radiansFromDegrees(aDegrees);                                 // Angle in radians
-   double accelerationThrust = computeAcceleration(THRUST, WEIGHT);                // Acceleration due to thrust 
-   double ddxThrust = computeHorizontalComponent(aRadians, accelerationThrust);    // Horizontal acceleration due to thrust
-   double ddyThrust = computeVerticalComponent(aRadians, accelerationThrust);      // Vertical acceleration due to thrust
-   double ddx = ddxThrust;                                                         // Total horizontal acceleration
-   double ddy = ddyThrust + GRAVITY;                                               // Total vertical acceleration
-   double v = computeTotalComponent(dx, dy);                                       // Total velocity
-   double a = computeTotalComponent(ddx, ddy);                                     // Total acceleration
-
-   // Run the simulator 5 times
-   for (int i = 0; i < 5; i++)
-   {
-      simulate(x, y, dx, dy, ddx, ddy, v, aDegrees, t, currentT);
-      display(x, y, dx, dy, v, aDegrees, currentT);
-      currentT++;
-   }
-
-   // Prompt for new angle and modify the necessary variables
-   aDegrees = prompt("What is the new angle of the LM where 0 is up (degrees)? ");
-   aRadians = radiansFromDegrees(aDegrees);                                        // Update angle in radians
-   ddxThrust = computeHorizontalComponent(aRadians, accelerationThrust);           // Update horizontal acceleration due to thrust
-   ddyThrust = computeVerticalComponent(aRadians, accelerationThrust);             // Update vertical acceleration due to thrust
-   ddx = ddxThrust;                                                                // Update total horizontal acceleration
-   ddy = ddyThrust + GRAVITY;                                                      // Update total vertical acceleration
-   v = computeTotalComponent(dx, dy);                                              // Update total velocity
-
-   // Run the simulator 5 more times
-   for (int i = 0; i < 5; i++)
-   {
-      simulate(x, y, dx, dy, ddx, ddy, v, aDegrees, t, currentT);
-      display(x, y, dx, dy, v, aDegrees, currentT);
-      currentT++;
-   }
-
-   return 0;
-}
+//int main()
+//{
+//   // Prompt for input and variables to be computed
+//   double dx = prompt("What is your horizontal velocity (m/s)? ");
+//   double dy = prompt("What is your vertical velocity (m/s)? ");
+//   double y = prompt("What is your altitude (m)? ");
+//   double x = 0.0;
+//   double aDegrees = prompt("What is the angle of the LM where 0 is up (degrees)? ");
+//   double t = 1.0;                                                                 // Time interval between updates
+//   double currentT = t;                                                            // Total time passed
+//   double aRadians = radiansFromDegrees(aDegrees);                                 // Angle in radians
+//   double accelerationThrust = computeAcceleration(THRUST, WEIGHT);                // Acceleration due to thrust 
+//   double ddxThrust = computeHorizontalComponent(aRadians, accelerationThrust);    // Horizontal acceleration due to thrust
+//   double ddyThrust = computeVerticalComponent(aRadians, accelerationThrust);      // Vertical acceleration due to thrust
+//   double ddx = ddxThrust;                                                         // Total horizontal acceleration
+//   double ddy = ddyThrust + GRAVITY;                                               // Total vertical acceleration
+//   double v = computeTotalComponent(dx, dy);                                       // Total velocity
+//   double a = computeTotalComponent(ddx, ddy);                                     // Total acceleration
+//
+//   // Run the simulator 5 times
+//   for (int i = 0; i < 5; i++)
+//   {
+//      simulate(x, y, dx, dy, ddx, ddy, v, aDegrees, t, currentT);
+//      display(x, y, dx, dy, v, aDegrees, currentT);
+//      currentT++;
+//   }
+//
+//   // Prompt for new angle and modify the necessary variables
+//   aDegrees = prompt("What is the new angle of the LM where 0 is up (degrees)? ");
+//   aRadians = radiansFromDegrees(aDegrees);                                        // Update angle in radians
+//   ddxThrust = computeHorizontalComponent(aRadians, accelerationThrust);           // Update horizontal acceleration due to thrust
+//   ddyThrust = computeVerticalComponent(aRadians, accelerationThrust);             // Update vertical acceleration due to thrust
+//   ddx = ddxThrust;                                                                // Update total horizontal acceleration
+//   ddy = ddyThrust + GRAVITY;                                                      // Update total vertical acceleration
+//   v = computeTotalComponent(dx, dy);                                              // Update total velocity
+//
+//   // Run the simulator 5 more times
+//   for (int i = 0; i < 5; i++)
+//   {
+//      simulate(x, y, dx, dy, ddx, ddy, v, aDegrees, t, currentT);
+//      display(x, y, dx, dy, v, aDegrees, currentT);
+//      currentT++;
+//   }
+//
+//   return 0;
+//}

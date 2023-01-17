@@ -19,7 +19,8 @@ using namespace std;
 
 /*********************************************
  * ANGLE
- * Represents an angle
+ * Represents an angle using both radians
+ * and degrees
  *********************************************/
 class Angle
 {

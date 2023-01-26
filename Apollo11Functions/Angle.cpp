@@ -27,7 +27,11 @@ class Angle
 public:
    // constructors
    Angle() : radians(M_PI) {}
-   Angle(double r) { radians = r; }
+   Angle(double r) 
+   { 
+      radians = r;
+      normalize();
+   }
 
    // getters
    double getDegrees() const { return convertToDegrees(radians); }

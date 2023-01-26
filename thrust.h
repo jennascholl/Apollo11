@@ -9,11 +9,33 @@
 
 #pragma once
 
+#include "uiInteract.h"
+
  /*********************************************
   * THRUST
-  * The lander's thrust
+  * Are we rotating or moving up?
   *********************************************/
 class Thrust
 {
+private:
+   // member variables
+   bool mainEngine;
+   bool clockwise;
+   bool counterclockwise;
+
+public:
+   // constructor
+   Thrust() : mainEngine(false), clockwise(false), counterclockwise(false) {}
+   
+   // getters
+   bool isMain()    const { return mainEngine;       }
+   bool isClock()   const { return clockwise;        }
+   bool isCounter() const { return counterclockwise; }
+
+   // setter
+   void set(const Interface* pUI);
+
+   void rotation();
+
 
 };

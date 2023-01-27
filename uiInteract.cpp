@@ -276,7 +276,7 @@ void Interface::initialize(int argc, char ** argv, const char * title, const Poi
 
    // create the window
    glutInit(&argc, argv);
-   glutInitWindowSize(ptUpperRight.getX() * 2, ptUpperRight.getY() * 2);   // size of the window
+   glutInitWindowSize(ptUpperRight.getX() * 2.0, ptUpperRight.getY() * 2.0);   // size of the window
  
 
    glutInitWindowPosition( 10, 10);                // initial position 

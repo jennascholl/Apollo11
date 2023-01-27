@@ -38,7 +38,9 @@ public:
    double getRadians() const { return radians; }
 
    // setters
-   void setDegrees(double d);
-   void setRadians(double r);
+   void setDegrees(double degrees);
+   void setRadians(double radians);
+   void addDegrees(double degrees);
+   void addRadians(double radians);
 };
 

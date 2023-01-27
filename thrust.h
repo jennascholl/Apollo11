@@ -22,15 +22,17 @@ private:
    bool mainEngine;
    bool clockwise;
    bool counterclockwise;
+   double vThrust;    // Thrust of main engine, in Newtons (kg m/s^2)
 
 public:
    // constructor
-   Thrust() : mainEngine(false), clockwise(false), counterclockwise(false) {}
+   Thrust() : mainEngine(false), clockwise(false), counterclockwise(false), vThrust(45000.000) {}
    
    // getters
-   bool isMain()    const { return mainEngine;       }
-   bool isClock()   const { return clockwise;        }
-   bool isCounter() const { return counterclockwise; }
+   bool isMain()      const { return mainEngine;       }
+   bool isClock()     const { return clockwise;        }
+   bool isCounter()   const { return counterclockwise; }
+   double getThrust() const { return vThrust;          }
 
    // setter
    void set(const Interface* pUI);

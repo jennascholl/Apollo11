@@ -7,7 +7,20 @@
  *    Everything we need to know about a star
  ************************************************************************/
 
-#include "star.h"    //for the Star class deffinition
+#include "star.h"    //for the Star class definition
 #include "uiDraw.h"  //for random() 
 
-Star::Star(const Point& pt : pt(pt));
+//reset the game
+void Star::reset(int width, int height)
+{
+
+}
+
+/*****************************************************************
+ * STAR : DRAW
+ * Draw a star on the screen
+ ****************************************************************/
+void Star::draw(ogstream& gout)
+{
+   gout.drawStar(pt, phase++);
+}

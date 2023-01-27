@@ -21,6 +21,7 @@ private:
    // member variables
    double ddx;
    double ddy;
+   double gravity = -1.625;
 
 public:
    // constructors

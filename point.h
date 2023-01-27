@@ -21,6 +21,10 @@
  *********************************************/
 class Point
 {
+private:
+   double x;           // horizontal position
+   double y;           // vertical position
+
 public:
    // constructors
    Point()            : x(0.0), y(0.0)  {}
@@ -53,10 +57,6 @@ public:
 
    // special functions
    void add(Acceleration a, Velocity v, double t);
-
-private:
-   double x;           // horizontal position
-   double y;           // vertical position
 };
 
 // stream I/O useful for debugging

@@ -19,17 +19,17 @@
 class Star
 {
 private:        //Member variables needed for drawing the star
-   Point pt;    //The position of a star
-   char phase;  //The phase of the star
+   Point pt;             //The position of a star
+   unsigned char phase;   //The phase of the star
 
 public:
    //the constructor generates a star
-   Star(const Point& pt);
+   Star(const Point& pt) : pt(pt) { phase = random(0, 255); }
 
    //reset the game
    void reset(int width, int height);
 
    //draw the star on the screen 
-   void draw(ogstream & gout);
+   void draw(ogstream & gout);  // can't be const because the phase must change
 
 };

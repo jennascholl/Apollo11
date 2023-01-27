@@ -27,7 +27,7 @@ private:
 
 public:
    // constructors
-   Velocity() : dx(0), dy(0)   {}
+   Velocity() : dx(0.0), dy(0.0)   {}
    Velocity(double dx, double dy);
 
    // getters

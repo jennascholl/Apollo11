@@ -10,13 +10,14 @@
 #include "angle.h"
 
 /******************************************
- * ANGLE : CONSTRUCTOR WITH RADIANS
+ * ANGLE : CONSTRUCTOR WITH DEGREES
  * Initialize the angle to the passed value
  *****************************************/
-Angle::Angle(double radians) : radians(radians)
+Angle::Angle(double degrees) : radians(convertToRadians(degrees))
 {
    normalize();
 }
+
 
 /******************************************
  * CONVERT TO DEGREES
@@ -91,4 +92,16 @@ void Angle::addRadians(double radians)
 void Angle::addDegrees(double degrees)
 {
    addRadians(convertToRadians(degrees));
+}
+
+/******************************************
+ * ANGLE : DISPLAY
+ * Display the angle in degrees to one
+ * decimal place of accuracy
+ *****************************************/
+void Angle::display() const
+{
+   cout.setf(std::ios::fixed | std::ios::showpoint);
+   cout.precision(1);
+   cout << convertToDegrees(radians) << " degrees" << endl;
 }

@@ -34,12 +34,3 @@ void Thrust::set(const Interface* pUI)
    else
       clockwise = false;
 }
-
-/******************************************
- * THRUST : ROTATION
- * Insert summary here
- *****************************************/
-void Thrust::rotation()
-{
-   
-}

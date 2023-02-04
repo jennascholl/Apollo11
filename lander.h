@@ -35,21 +35,14 @@ private:
    Acceleration a;
    Angle angle;
    int fuel;
-   double weight;
    Thrust thrust;
-   double gravity;
 
 public:
    // constructor
-   Lander(Point ptUpperRight) :
-      ptUpperRight(ptUpperRight),
-      pt(ptUpperRight),
-      fuel(5000),
-      angle(0.0),
-      weight(15103.000),
-      gravity(-1.625),
-      v(-6.0, -2.0),
-      currentState(FLYING) {}
+   Lander(Point ptUpperRight) : ptUpperRight(ptUpperRight), pt(ptUpperRight)
+   {
+      reset();
+   }
 
    // getters
    bool isDead();

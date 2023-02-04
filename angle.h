@@ -10,6 +10,7 @@
 #pragma once
 
 #include <iostream>
+using namespace std;
 #define _USE_MATH_DEFINES    // for M_PI
 #include <math.h>
 
@@ -23,15 +24,16 @@ private:
    // the member variable
    double radians;
 
-   // special operations
+   // special functions
    double convertToDegrees(double radians) const;
    double convertToRadians(double radians) const;
    void normalize();
 
 public:
    // constructors
-   Angle() : radians(M_PI) {}
-   Angle(double radians);
+   Angle() : radians(0.0) {}
+   Angle(double degrees);
+   Angle(const Angle& rhs) { radians = rhs.radians; }
 
    // getters
    double getDegrees() const { return convertToDegrees(radians); }
@@ -42,5 +44,7 @@ public:
    void setRadians(double radians);
    void addDegrees(double degrees);
    void addRadians(double radians);
+
+   void display() const;
 };
 

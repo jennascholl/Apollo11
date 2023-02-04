@@ -6,9 +6,10 @@
  * 3. Assignment Description:
  *      Simulate the Apollo 11 landing
  * 4. What was the hardest part? Be as specific as possible.
- *      -a paragraph or two about how the assignment went for you-
+ *      The hardest part of this assignment was getting the physics
+ *      to look correct. 
  * 5. How long did it take for you to complete the assignment?
- *      -total time in hours: reading the assignment, submitting, and writing code-
+ *      It took about 7 hours to complete this assignment.
  *****************************************************************/
 
 #pragma once
@@ -22,6 +23,10 @@
 
 #include <vector>
 
+/*********************************************
+ * GAME
+ * The main components of the game put together
+ *********************************************/
 class Game
 {
 private:
@@ -55,7 +60,8 @@ public:
  *****************************************/
 void Game::reset()
 {
-   //star.reset();
+   for (auto &star : stars)
+      star->reset();
    ground.reset();
    lander.reset();
 }
@@ -99,7 +105,7 @@ void Game::display()
 {
    ogstream gout;
 
-   for (auto star : stars)
+   for (auto &star : stars)
       star->draw(gout);
    ground.draw(gout);
    lander.draw(gout);

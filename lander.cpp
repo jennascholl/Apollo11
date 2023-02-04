@@ -10,6 +10,9 @@
 #include "lander.h"
 #include <iostream>
 
+#define GRAVITY -1.625
+#define WEIGHT   15103.000
+
 using namespace std;
 
 /******************************************
@@ -54,7 +57,11 @@ bool Lander::isFlying()
  *****************************************/
 void Lander::reset()
 {
-
+   fuel = 5000;
+   angle = 0.0;
+   v.setDX(-6.0);
+   v.setDY(-2.0);
+   currentState = FLYING;
 }
 
 /******************************************
@@ -78,7 +85,7 @@ void Lander::input(const Interface * pUI)
    // we can't use the thruster with no fuel
    if (fuel == 0)
    {
-      a.setDDY(gravity * (pUI->frameRate() * 3));
+      a.setDDY(GRAVITY * (pUI->frameRate() * 3));
       a.setDDX(0);
       return; 
    }
@@ -89,14 +96,14 @@ void Lander::input(const Interface * pUI)
    // adjust our acceleration and fuel accordingly
    if (thrust.isMain())
    {
-      double power = thrust.getThrust() / weight;
-      a.setDDY(cos(angle.getRadians()) * power + (gravity * (pUI->frameRate() * 3)));
+      double power = thrust.getThrust() / WEIGHT;
+      a.setDDY(cos(angle.getRadians()) * power + (GRAVITY * (pUI->frameRate() * 3)));
       a.setDDX(-sin(angle.getRadians()) * power);
       fuel = fuel - 10;
    }
    else
    {
-      a.setDDY(gravity * (pUI->frameRate() * 3));
+      a.setDDY(GRAVITY * (pUI->frameRate() * 3));
       a.setDDX(0);
    }
 

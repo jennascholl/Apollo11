@@ -36,8 +36,4 @@ public:
 
    // setter
    void set(const Interface* pUI);
-
-   void rotation();
-
-
 };

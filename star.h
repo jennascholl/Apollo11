@@ -24,10 +24,10 @@ private:        //Member variables needed for drawing the star
 
 public:
    //the constructor generates a star
-   Star(const Point& pt) : pt(pt) { phase = random(0, 255); }
+   Star(const Point& pt) : pt(pt) { reset(); }
 
-   //reset the game
-   void reset(int width, int height);
+   //reset the star
+   void reset();
 
    //draw the star on the screen 
    void draw(ogstream & gout);  // can't be const because the phase must change

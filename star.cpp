@@ -10,10 +10,13 @@
 #include "star.h"    //for the Star class definition
 #include "uiDraw.h"  //for random() 
 
-//reset the game
-void Star::reset(int width, int height)
+ /*****************************************************************
+  * STAR : RESET
+  * Reset the star's state
+  ****************************************************************/
+void Star::reset()
 {
-
+   phase = random(0, 255);
 }
 
 /*****************************************************************

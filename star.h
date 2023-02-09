@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "point.h"   // for Point
+#include "point.h"    // for Point
 #include "uiDraw.h"   // for ogstream
 
 /*********************************************
@@ -18,18 +18,15 @@
  *********************************************/
 class Star
 {
-private:        //Member variables needed for drawing the star
-   Point pt;             //The position of a star
-   unsigned char phase;   //The phase of the star
+private:     
+   Point pt;             // the position of a star
+   unsigned char phase;  // the phase of the star
 
 public:
-   //the constructor generates a star
+   // constructor
    Star(const Point& pt) : pt(pt) { reset(); }
 
-   //reset the star
    void reset();
-
-   //draw the star on the screen 
    void draw(ogstream & gout);  // can't be const because the phase must change
 
 };

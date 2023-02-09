@@ -8,10 +8,11 @@
  ************************************************************************/
 
 #include "lander.h"
-#include <iostream>
+#include <iostream>     
 
-#define GRAVITY -1.625
-#define WEIGHT   15103.000
+const double GRAVITY = -1.625;   // vertical acceleration due to gravity, in m/s^2
+const double WEIGHT = 15103.000; // weight in KG
+const double TIME = 0.100;       // the rate in seconds per frame
 
 using namespace std;
 
@@ -59,8 +60,8 @@ void Lander::reset()
 {
    fuel = 5000;
    angle = 0.0;
-   v.setDX(-6.0);
-   v.setDY(-2.0);
+   v.setDX(-5.0);
+   v.setDY(0.0);
    currentState = FLYING;
 }
 
@@ -71,7 +72,10 @@ void Lander::reset()
 void Lander::draw(ogstream & gout)
 {
    gout.drawLander(pt, angle.getRadians());
-   gout.drawLanderFlames(pt, angle.getRadians(), thrust.isMain(), thrust.isCounter(), thrust.isClock());
+   // no flames if there's no fuel or if we've crashed or landed
+   if (fuel != 0 && isFlying())
+      gout.drawLanderFlames(pt, angle.getRadians(), thrust.isMain(), 
+                         thrust.isCounter(), thrust.isClock());
 
 }
 
@@ -85,7 +89,7 @@ void Lander::input(const Interface * pUI)
    // we can't use the thruster with no fuel
    if (fuel == 0)
    {
-      a.setDDY(GRAVITY * (pUI->frameRate() * 3));
+      a.setDDY(GRAVITY);
       a.setDDX(0);
       return; 
    }
@@ -97,25 +101,25 @@ void Lander::input(const Interface * pUI)
    if (thrust.isMain())
    {
       double power = thrust.getThrust() / WEIGHT;
-      a.setDDY(cos(angle.getRadians()) * power + (GRAVITY * (pUI->frameRate() * 3)));
+      a.setDDY(cos(angle.getRadians()) * power + GRAVITY);
       a.setDDX(-sin(angle.getRadians()) * power);
       fuel = fuel - 10;
    }
    else
    {
-      a.setDDY(GRAVITY * (pUI->frameRate() * 3));
+      a.setDDY(GRAVITY * 1.0);
       a.setDDX(0);
    }
 
    // rotate if necessary
    if (thrust.isClock())
    {
-      angle.addRadians(0.1);
+      angle.addRadians(-0.1);
       fuel = fuel - 1;
    }
    if (thrust.isCounter())
    {
-      angle.addRadians(-0.1);
+      angle.addRadians(0.1);
       fuel = fuel - 1;
    }
 
@@ -128,10 +132,10 @@ void Lander::input(const Interface * pUI)
  * LANDER : COAST
  * Apply inertia to move the lander
  *****************************************/
-void Lander::coast(const Interface * pUI)
+void Lander::coast()
 {
-   v.add(a, pUI->frameRate() * 3.0);
-   pt.add(a, v, pUI->frameRate() * 3.0);
+   v.add(a, TIME);
+   pt.add(a, v, TIME);
 }
 
 /******************************************

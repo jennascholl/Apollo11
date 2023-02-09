@@ -2,14 +2,14 @@
  * 1. Name:
  *      Jenna Scholl & Neil Reed
  * 2. Assignment Name:
- *      Lab 04: Apollo 11 Visuals
+ *      Lab 05: Apollo 11 Code Complete
  * 3. Assignment Description:
  *      Simulate the Apollo 11 landing
  * 4. What was the hardest part? Be as specific as possible.
  *      The hardest part of this assignment was getting the physics
  *      to look correct. 
  * 5. How long did it take for you to complete the assignment?
- *      It took about 7 hours to complete this assignment.
+ *      It took less than an hour to complete this assignment.
  *****************************************************************/
 
 #pragma once
@@ -36,11 +36,10 @@ private:
    std::vector<Star*> stars;
 
 public:
-   Game(Point ptUpperRight) :
-      lander(ptUpperRight),
-      ground(ptUpperRight),
-      ptUpperRight(ptUpperRight) 
+   Game(Point ptUpperRight) : lander(ptUpperRight),
+      ground(ptUpperRight), ptUpperRight(ptUpperRight) 
    {
+      // spawn 40 stars in random positions
       for (int i = 0; i < 40; i++)
       {
          stars.push_back(new Star(Point(((double) ptUpperRight.getX() * (rand() % 100) / 100),
@@ -49,7 +48,7 @@ public:
    }
    void reset();
    void input(const Interface* pUI);
-   void gamePlay(const Interface* pUI);
+   void gamePlay();
    void display();
    Lander getLander() { return lander; }
 };
@@ -81,13 +80,16 @@ void Game::input(const Interface* pUI)
  * GAME : GAMEPLAY
  * The moving parts of the game
  *****************************************/
-void Game::gamePlay(const Interface* pUI)
+void Game::gamePlay()
 {
+   // don't do anything if we're not still flying
    if (!lander.isFlying())
       return;
 
-   lander.coast(pUI);
+   // apply inertia to the lander
+   lander.coast();
 
+   // check if we have collided with anything
    if (ground.hitGround(lander.getPosition(), 20))
       lander.crash();
    else if (ground.onPlatform(lander.getPosition(), 20))
@@ -105,12 +107,13 @@ void Game::display()
 {
    ogstream gout;
 
+   // draw the elements of the game
    for (auto &star : stars)
       star->draw(gout);
    ground.draw(gout);
    lander.draw(gout);
 
-   // put some text on the screen
+   // draw the text
    gout.setf(std::ios::fixed | std::ios::showpoint);
    gout.precision(2);
    gout.setPosition(Point(30.0, ptUpperRight.getY() - 30.0));
@@ -118,6 +121,7 @@ void Game::display()
         << " lbs\nAltitude:\t" << (int)ground.getElevation(lander.getPosition())
         << " meters\nSpeed:\t" << lander.getVelocity().getSpeed() << " m/s";
 
+   // end message
    if (lander.isDead())
    {
       gout.setPosition(Point(ptUpperRight.getX() * 0.30, ptUpperRight.getY() * 0.67));
@@ -149,7 +153,7 @@ void callBack(const Interface* pUI, void* p)
    game->input(pUI);
 
    // move the stuff around
-   game->gamePlay(pUI);
+   game->gamePlay();
 
    // draw the screen
    game->display();
@@ -172,13 +176,13 @@ int WINAPI wWinMain(
 int main(int argc, char** argv)
 #endif // !_WIN32
 {
-   // Initialize OpenGL
+   // initialize OpenGL
    Point ptUpperRight(400.0, 400.0);
    Interface ui(0, NULL,
       "Lunar Lander",
       ptUpperRight);
 
-   // Initialize the game class
+   // initialize the game class
    Game game(ptUpperRight);
 
    // set everything into action

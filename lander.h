@@ -9,14 +9,13 @@
 
 #pragma once
 
-#include "point.h"
-#include "velocity.h"
-#include "angle.h"
-#include "uiDraw.h"
-#include "thrust.h"
-#include "uiInteract.h"
+#include "point.h"        // for pt & ptUpperRight
+#include "angle.h"        // for angle
+#include "uiDraw.h"       // for draw()
+#include "thrust.h"       // for thrust
+#include "uiInteract.h"   // for input()
 
-#include <math.h>
+#include <math.h>         // for sin and cosine
 
 enum status { FLYING, LANDED, DEAD };
 
@@ -39,10 +38,8 @@ private:
 
 public:
    // constructor
-   Lander(Point ptUpperRight) : ptUpperRight(ptUpperRight), pt(ptUpperRight)
-   {
-      reset();
-   }
+   Lander(Point ptUpperRight) : ptUpperRight(ptUpperRight), 
+               pt(ptUpperRight.getX(), ptUpperRight.getY() - 50.0) { reset(); }
 
    // getters
    bool isDead();
@@ -54,12 +51,12 @@ public:
 
    // setters
 
-   void coast(const Interface * pUI);
+   void coast();
    void land();
    void crash();
 
    // special functions
    void reset();
    void draw(ogstream & gout);
-   void input(const Interface * pUI);
+   void input(const Interface* pUI);
 };

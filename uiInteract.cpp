@@ -173,9 +173,6 @@ void Interface::keyEvent(int key, bool fDown)
       case GLUT_KEY_DOWN:
          isDownPress = fDown;
          break;
-//      case GLUT_KEY_UP:
-//         isUpPress = fDown;
-//         break;
       case GLUT_KEY_RIGHT:
          isRightPress = fDown;
          break;
@@ -199,8 +196,6 @@ void Interface::keyEvent()
 {
    if (isDownPress)
       isDownPress++;
-//   if (isUpPress)
-//      isUpPress++;
    if (isLeftPress)
       isLeftPress++;
    if (isRightPress)
@@ -246,7 +241,6 @@ void Interface::setFramesPerSecond(double value)
  * Somewhere globally.  This is a good spot
  **************************************************/
 int          Interface::isDownPress  = 0;
-//int          Interface::isUpPress    = 0;
 int          Interface::isLeftPress  = 0;
 int          Interface::isRightPress = 0;
 bool         Interface::isSpacePress = false;

@@ -17,7 +17,7 @@
 
 #include <math.h>         // for sin and cosine
 
-enum status { FLYING, LANDED, DEAD };
+enum status { FLYING, LANDED, DEAD, EMPTY };
 
 /*********************************************
  * LANDER
@@ -45,6 +45,7 @@ public:
    bool isDead();
    bool isLanded();
    bool isFlying();
+   bool isEmpty();
    Point getPosition()    { return pt;   }
    Velocity getVelocity() { return v;    }
    int   getFuel()        { return fuel; }
@@ -54,6 +55,7 @@ public:
    void coast();
    void land();
    void crash();
+   void fuelEmpty();
 
    // special functions
    void reset();

@@ -53,6 +53,18 @@ bool Lander::isFlying()
 }
 
 /******************************************
+ * LANDER : IS EMPTY
+ * Does the lander still have fuel?
+ *****************************************/
+bool Lander::isEmpty()
+{
+   if (currentState == EMPTY)
+      return true;
+   else
+      return false;
+}
+
+/******************************************
  * LANDER : RESET
  * Reset all the lander's states
  *****************************************/
@@ -156,4 +168,13 @@ void Lander::crash()
 {
    currentState = DEAD;
    angle.setDegrees(180.0);
+}
+
+/******************************************
+ * LANDER : FUELEMPTY
+ * Kill the lunar lander
+ *****************************************/
+void Lander::fuelEmpty()
+{
+   currentState = EMPTY;
 }

@@ -89,6 +89,10 @@ void Game::gamePlay()
    // apply inertia to the lander
    lander.coast();
 
+   // check if we still have fuel
+   if (lander.getFuel() == 0)
+      lander.fuelEmpty();
+
    // check if we have collided with anything
    if (ground.hitGround(lander.getPosition(), 20))
       lander.crash();
@@ -122,6 +126,11 @@ void Game::display()
         << " meters\nSpeed:\t" << lander.getVelocity().getSpeed() << " m/s";
 
    // end message
+   if (lander.isEmpty())
+   {
+      gout.setPosition(Point(ptUpperRight.getX() * 0.30, ptUpperRight.getY() * 0.67));
+      gout << "Houston, we're out of fuel!";
+   }
    if (lander.isDead())
    {
       gout.setPosition(Point(ptUpperRight.getX() * 0.30, ptUpperRight.getY() * 0.67));

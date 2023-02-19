@@ -8,7 +8,7 @@ Apollo 11 Simulator Demonstration (https://youtu.be/z-TlAULq0gA)
 
 # Development Environment
 
-In order to develop this app, I used Visual Studio Code.
+Visual Studio was used to develop this application.
 
 The code is written in C++.
 

@@ -4,7 +4,7 @@ This program is a simulator to represent the Apollo 11's iconic moon landing by 
 
 This project was made with the intent of expanding my capabilities as a software engineer by learning and applying software design metrics such as cohesion, coupling, and fidelity.
 
-Apollo 11 Simulator Demonstration (https://youtu.be/z-TlAULq0gA)
+[Apollo 11 Simulator Demonstration] (https://youtu.be/z-TlAULq0gA)
 
 # Development Environment
 
